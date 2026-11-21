@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A Letter For You</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: url( https://i.pinimg.com/1200x/91/25/7b/91257b0ddeec8593ad4a9a34fa0070e1.jpg) center / cover no-repeat fixed;
+      font-family: "Brush Script MT", cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+    }
+
+    main {
+      width: min(100%, 600px);
+      text-align: center;
+    }
+
+    .envelope-wrap {
+      display: block;
+      margin: 0 auto;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .envelope-wrap:focus-visible {
+      outline: 3px solid #8b7355;
+      outline-offset: 8px;
+      border-radius: 8px;
+    }
+
+    .envelope {
+      position: relative;
+      width: 260px;
+      height: 170px;
+      background: #e6d5b8;
+      border: 1px solid #8b7355;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 8px 18px rgb(75 56 40 / 12%);
+    }
+
+    .flap {
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      background: #d9c5a0;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top;
+      transition: transform 700ms ease;
+    }
+
+    .envelope-wrap.open .flap {
+      transform: rotateX(180deg);
+    }
+
+    .envelope-front {
+      position: absolute;
+      inset: 0;
+      background: #e6d5b8;
+      clip-path: polygon(0 100%, 50% 48%, 100% 100%);
+    }
+
+    .seal {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      top: 63%;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #a85d4a;
+      color: #fff4e7;
+      font-size: 14px;
+      transform: translate(-50%, -50%);
+      transition: opacity 300ms ease;
+    }
+
+    .envelope-wrap.open .seal {
+      opacity: 0;
+    }
+
+    .hint {
+      margin: 18px 0 0;
+      color: #8b7355;
+      font-size: 15px;
+      font-style: italic;
+    }
+
+    .letter {
+      margin: 36px auto 0;
+      padding: 32px clamp(20px, 6vw, 48px);
+      background: #fffaf0;
+      border: 1px solid #e2d2b8;
+      border-radius: 6px;
+      box-shadow: 0 10px 30px rgb(75 56 40 / 10%);
+      line-height: 1.8;
+      text-align: left;
+    }
+
+    .letter[hidden] {
+      display: none;
+    }
+
+    .letter.show {
+      animation: fadeIn 900ms ease both;
+    }
+
+    .letter h1 {
+      margin: 0 0 20px;
+      color: #805b43;
+      font-size: clamp(24px, 6vw, 32px);
+      font-weight: normal;
+      text-align: center;
+    }
+
+    .letter p {
+      margin: 0 0 16px;
+    }
+
+    .signature {
+      margin-top: 26px !important;
+      color: #805b43;
+      font-style: italic;
+      text-align: right;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <button
+      class="envelope-wrap"
+      id="open-letter"
+      type="button"
+      aria-expanded="false"
+      aria-controls="letter"
+    >
+      <span class="envelope" aria-hidden="true">
+        <span class="flap"></span>
+        <span class="envelope-front"></span>
+        <span class="seal">♥</span>
+      </span>
+     <H1> <span class="hint">A letter for you — click to open</span></H1>
+    </button>
+
+    <article class="letter" id="letter" aria-labelledby="letter-title" hidden>
+      <h1 id="letter-title" tabindex="-1">A Letter For You</h1>
+      <p>To my pookie ,</p>
+      <p>
+        Hey twin, I know things haven't been great lately, but I still wanted to wish you a Happy Boyfriend Day. I didn't want you to feel left out. You're the best and always will be. Take care, enjoy every moment, and sorry for all the drama I caused before. I love you!! That's all… Happy Boyfriend Day! ♡
+      </p>
+      <p>
+        I hope this note finds you surrounded by warmth and reminds you
+        that someone is thinking of you today.
+      </p>
+      <p class="signature">With love,<br>luv youu<3</p>
+    </article>
+  </main>
+
+  <script>
+    const button = document.querySelector("#open-letter");
+    const letter = document.querySelector("#letter");
+    const title = document.querySelector("#letter-title");
+
+    button.addEventListener("click", () => {
+      if (button.getAttribute("aria-expanded") === "true") return;
+
+      button.classList.add("open");
+      button.setAttribute("aria-expanded", "true");
+      button.querySelector(".hint").textContent = "Your letter is open";
+      letter.hidden = false;
+      letter.classList.add("show");
+      title.focus({ preventScroll: true });
+    });
+  </script>
+</body>
+</html>
